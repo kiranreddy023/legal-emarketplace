@@ -11,8 +11,6 @@ services:
     command: npm run dev
     networks:
       - myappnet
-    volumes:
-      - ./backend:/app
     environment:
       - NODE_ENV=development
 
@@ -28,8 +26,6 @@ services:
       - myappnet
     depends_on:
       - backend
-    volumes:
-      - ./frontend:/app
     environment:
       - NODE_ENV=development
 
