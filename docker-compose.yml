@@ -46,3 +46,6 @@ services:
 networks:
   myappnet:
     driver: bridge
+
+volumes:
+  mongo_data:
