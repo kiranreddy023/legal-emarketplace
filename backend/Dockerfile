@@ -1,13 +1,16 @@
 FROM node:20.19-slim
 
-WORKDIR /backend
+WORKDIR /app
 
-COPY backend/package*.json ./
+# Copy package.json and package-lock.json first
+COPY package*.json ./
 
-RUN npm install
+# Install dependencies
+RUN npm install --production
 
-COPY backend/* ./
+# Copy source code
+COPY . .
 
 EXPOSE 5000
 
-CMD [ "npm", "run", "dev" ]
+CMD ["npm", "run", "dev"]
