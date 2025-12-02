@@ -3,7 +3,7 @@ version: "3.9"
 services:
   mongodb:
     image: mongo:latest
-    container_name: localmongo
+    container_name: mongodb
     restart: always
     ports:
       - "27017:27017"
