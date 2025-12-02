@@ -3,16 +3,21 @@ const connectDB = require('./config/db');
 const User = require('./models/User');
 
 (async () => {
-  await connectDB(process.env.MONGO_URI);
+  await connectDB(); // uses MONGO_URI from .env
+
+  // Clear existing users
   await User.deleteMany({});
+
+  // Create admin user
   const admin = await User.create({
     name: 'Admin',
-    email: 'monisha@example.com',
+    email: 'kiran@kiran.com',
     phone: '9999999999',
-    password: 'Monisha@123',
+    password: 'Kiran@123',
     role: 'ADMIN',
     // isVerified: true
   });
-  console.log('Seeded admin:', admin.email);
+
+  console.log('✅ Seeded admin:', admin.email);
   process.exit(0);
 })();
