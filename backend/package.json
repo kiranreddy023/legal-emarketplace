@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run seed && npm run dev",
+    "dev": "npm run seed && npm run start",
     "start": "node src/server.js",
     "seed": "node src/seed.js"
   },
