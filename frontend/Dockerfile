@@ -1,5 +1,4 @@
-# Stage 1: Build the frontend
-FROM node:20.19-slim AS build
+FROM node:20.19-slim
 
 WORKDIR /app
 
