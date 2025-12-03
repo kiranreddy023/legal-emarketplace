@@ -14,7 +14,19 @@ services:
       - mongo_data:/data/db
     networks:
       - myappnet
-
+  mongo-express:
+    image: mongo-express:latest
+    restart: always
+    ports:
+    - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - myappnet
   backend:
     build:
       context: ./backend
