@@ -1,0 +1,22 @@
+version: '3.0'
+services:
+  webapp:
+    image: webapp:v1
+    ports:
+      - "3000:3000"
+    networks:
+      - custom-network
+    container_name: webapp
+    volumes:
+      - webappvolume:/nodeapp
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    networks:
+      - custom-network
+    container_name: nginx
+volumes:
+  webappvolume:
+networks:
+  custom-network:

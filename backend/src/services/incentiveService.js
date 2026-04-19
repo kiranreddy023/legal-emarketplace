@@ -1,9 +1,14 @@
 const Provider = require('../models/Provider');
 const Incentive = require('../models/Incentive');
+const { sequelize } = require('../config/db');
 
 const addPoints = async (providerId, points, reason) => {
-  await Incentive.create({ provider: providerId, points, reason });
-  await Provider.findByIdAndUpdate(providerId, { $inc: { incentivePoints: points } });
+  await Incentive.create({ providerId, points, reason });
+  const provider = await Provider.findByPk(providerId);
+  if (provider) {
+    provider.incentivePoints += points;
+    await provider.save();
+  }
 };
 
 const rewardCompletion = async (providerId) => addPoints(providerId, 10, 'Completed service');

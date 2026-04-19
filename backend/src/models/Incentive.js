@@ -1,12 +1,41 @@
-const mongoose = require('mongoose');
+const { DataTypes, Model } = require('sequelize');
+const { sequelize } = require('../config/db');
+const Provider = require('./Provider');
 
-const incentiveSchema = new mongoose.Schema(
+class Incentive extends Model {}
+
+Incentive.init(
   {
-    provider: { type: mongoose.Schema.Types.ObjectId, ref: 'Provider', required: true },
-    points: { type: Number, required: true },
-    reason: { type: String, required: true }
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    providerId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: Provider,
+        key: 'id'
+      }
+    },
+    points: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    reason: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   },
-  { timestamps: true }
+  {
+    sequelize,
+    modelName: 'Incentive',
+    tableName: 'incentives',
+    timestamps: true
+  }
 );
 
-module.exports = mongoose.model('Incentive', incentiveSchema);
+Incentive.belongsTo(Provider, { foreignKey: 'providerId', as: 'provider' });
+
+module.exports = Incentive;

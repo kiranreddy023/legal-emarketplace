@@ -2,8 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const connectDB = require('./config/db');
+const { connectDB } = require('./config/db');
 const { errorHandler } = require('./utils/error');
+
+// Import models to register them with Sequelize
+require('./models/User');
+require('./models/Provider');
+require('./models/Booking');
+require('./models/Review');
+require('./models/Incentive');
 
 const authRoutes = require('./routes/authRoutes');
 const providerRoutes = require('./routes/providerRoutes');

@@ -1,23 +1,68 @@
-const mongoose = require('mongoose');
+const { DataTypes, Model } = require('sequelize');
+const { sequelize } = require('../config/db');
+const User = require('./User');
 
-const providerSchema = new mongoose.Schema(
+class Provider extends Model {}
+
+Provider.init(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-    experience: { type: Number, required: true, min: 0 },
-    profession: { type: String, enum: ['Advocate','Mediator','Arbitrator','Notary','DocumentWriter'], required: true },
-    licenseNumber: { type: String, required: true, unique: true },
-    documentUrl: { type: String }, // simple URL for uploaded doc
-    ratingAvg: { type: Number, default: 0 },
-    ratingCount: { type: Number, default: 0 },
-    availability: [
-      {
-        date: { type: String }, // ISO date string (YYYY-MM-DD)
-        slots: [{ type: String }] // e.g., "10:00","10:30"
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+      references: {
+        model: User,
+        key: 'id'
       }
-    ],
-    incentivePoints: { type: Number, default: 0 }
+    },
+    experience: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: { min: 0 }
+    },
+    profession: {
+      type: DataTypes.ENUM('Advocate', 'Mediator', 'Arbitrator', 'Notary', 'DocumentWriter'),
+      allowNull: false
+    },
+    licenseNumber: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    documentUrl: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    ratingAvg: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0
+    },
+    ratingCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    availability: {
+      type: DataTypes.JSON,
+      defaultValue: []
+    },
+    incentivePoints: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   },
-  { timestamps: true }
+  {
+    sequelize,
+    modelName: 'Provider',
+    tableName: 'providers',
+    timestamps: true
+  }
 );
 
-module.exports = mongoose.model('Provider', providerSchema);
+Provider.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+module.exports = Provider;
