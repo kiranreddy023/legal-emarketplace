@@ -39,7 +39,10 @@ exports.registerCitizen = async (req, res, next) => {
     const user = await User.create({ ...value, role: 'CITIZEN', isVerified: true });
     const token = signToken(user);
     res.status(201).json({ token, user: { id: user.id, name: user.name, role: user.role } });
-  } catch (err) { next(err); }
+  } catch (err) {
+    console.error('❌ Citizen registration error:', err.message);
+    next(err);
+  }
 };
 
 exports.registerProvider = async (req, res, next) => {
@@ -69,6 +72,7 @@ exports.registerProvider = async (req, res, next) => {
     const token = signToken(user);
     res.status(201).json({ token, user: { id: user.id, role: user.role }, provider });
   } catch (err) {
+    console.error('❌ Provider registration error:', err.message);
     next(err);
   }
 };
