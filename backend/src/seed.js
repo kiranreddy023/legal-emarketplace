@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { connectDB, sequelize } = require('./config/db');
 const User = require('./models/User');
 
