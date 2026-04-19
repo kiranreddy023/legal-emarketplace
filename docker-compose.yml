@@ -50,8 +50,6 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      args:
-        REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL:-http://localhost:5000}
     container_name: legal-emarketplace-frontend
     ports:
       - "3000:3000"

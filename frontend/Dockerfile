@@ -3,12 +3,6 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Accept build argument for API URL
-ARG REACT_APP_API_BASE_URL=http://localhost:5000
-
-# Set as environment variable during build
-ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
-
 # Copy package files
 COPY package*.json ./
 

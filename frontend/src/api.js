@@ -1,10 +1,7 @@
 import axios from "axios";
 
-const baseURL = `${process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000'}/api`;
-console.log('🔧 API Base URL:', baseURL);
-
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: '/api',
 });
 
 api.interceptors.request.use((config) => {
@@ -12,7 +9,7 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  console.log('📤 API Request:', config.method.toUpperCase(), config.url);
+  console.log('📤 API Request:', config.method?.toUpperCase(), config.url);
   return config;
 });
 
