@@ -11,7 +11,5 @@ npm-debug.log
 build
 coverage
 .eslintcache
-public
-src
 *.bat
 .env.example
