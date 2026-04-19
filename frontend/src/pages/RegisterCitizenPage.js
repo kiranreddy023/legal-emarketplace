@@ -58,12 +58,17 @@ export default function RegisterCitizenPage() {
     }
 
     try {
+      console.log('Attempting to register citizen with:', form);
       const { data } = await api.post("/auth/register/citizen", form);
+      console.log('Registration successful:', data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/citizen");
     } catch (error) {
-      setErr(error.response?.data?.error || "Registration failed");
+      console.error('Registration error:', error);
+      console.error('Response data:', error.response?.data);
+      console.error('Response status:', error.response?.status);
+      setErr(error.response?.data?.error || error.message || "Registration failed");
     }
   };
 
